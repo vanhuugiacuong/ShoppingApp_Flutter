@@ -16,115 +16,84 @@ class _CustomProductCardState extends State<CustomProductCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white, // nền đen
-      // shadowColor: Colors.greenAccent.withOpacity(1),
+      color: Colors.white,
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 30,
-      shadowColor: const Color.fromARGB(255, 218, 218, 218),
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AspectRatio(
-              aspectRatio: 1.5,
-              child: Image.network(
-                widget.shoe.imageUrl,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+      shadowColor: const Color.fromARGB(255, 144, 143, 143),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Hình ảnh
+          // Hình ảnh sản phẩm
+          AspectRatio(
+            aspectRatio: 1.2,
+            child: Image.network(
+              widget.shoe.imageUrl,
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
-            const SizedBox(height: 12),
-            Text(
-              widget.shoe.name,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              '\$${widget.shoe.price.toStringAsFixed(2)}',
-              style: TextStyle(
-                color: Colors.grey[700],
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              widget.shoe.description,
-              style: TextStyle(color: Colors.grey[600]),
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+          ),
+          // Tên và giá sản phẩm
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                OutlinedButton(
-                  onPressed: () {
-                    // Xử lý "View Details" nếu có
-                  },
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: const Color(0xFF1DB954), // Màu viền & chữ
-                    side: const BorderSide(color: Color(0xFF1DB954), width: 2),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 12,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    textStyle: const TextStyle(fontWeight: FontWeight.w600),
+                Text(
+                  widget.shoe.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
-                  child: const Text('View Details'),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(width: 10),
-                FilledButton.icon(
-                  icon: const Icon(Icons.add_shopping_cart),
-                  label: const Text("Cart"),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: const Color(0xFF1DB954), // Spotify green
-                    foregroundColor: Colors.white, // icon + text color
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 12,
+                const SizedBox(height: 4),
+                Text('\$${widget.shoe.price.toStringAsFixed(2)}'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        final newShoe = ShoeInCart(
+                          id: widget.shoe.id,
+                          name: widget.shoe.name,
+                          price: widget.shoe.price,
+                          imageUrl: widget.shoe.imageUrl,
+                          description: widget.shoe.description,
+                          quantity: 1,
+                          isSelected: false,
+                        );
+                        Provider.of<CartProvider>(
+                          context,
+                          listen: false,
+                        ).addItem(newShoe);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              '${widget.shoe.name} đã thêm vào giỏ hàng!',
+                            ),
+                            duration: const Duration(seconds: 2),
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.green[600],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.shopping_cart),
                     ),
-                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                  ),
-                  onPressed: () {
-                    final newShoe = ShoeInCart(
-                      id: widget.shoe.id,
-                      name: widget.shoe.name,
-                      price: widget.shoe.price,
-                      imageUrl: widget.shoe.imageUrl,
-                      description: widget.shoe.description,
-                    );
-                    Provider.of<CartProvider>(
-                      context,
-                      listen: false,
-                    ).addItem(newShoe);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          '${widget.shoe.name} đã được thêm vào giỏ hàng!',
-                        ),
-                        duration: const Duration(seconds: 2),
-                        behavior: SnackBarBehavior.floating,
-                        backgroundColor: Colors.green[600],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    );
-                  },
+                    IconButton(
+                      onPressed: (){
+                      },
+                      icon: const Icon(Icons.more_vert))
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+
+        ],
       ),
     );
   }

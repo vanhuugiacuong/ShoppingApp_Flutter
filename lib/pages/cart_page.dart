@@ -20,7 +20,6 @@ class _CartPageState extends State<CartPage> {
     for (var shoe in cartProvider.cartItems) {
       shoe.isSelected = selectAll;
     }
-    cartProvider.notifyListeners(); // Cập nhật UI
   }
 
   void _confirmDeleteSelected(CartProvider cartProvider) async {
@@ -84,8 +83,10 @@ class _CartPageState extends State<CartPage> {
           return Column(
             children: [
               CheckboxListTile(
+              
                 value: selectAll,
                 onChanged: (_) => _toggleSelectAll(cartProvider),
+                
                 title: const Text("Chọn tất cả"),
               ),
               Expanded(
@@ -110,7 +111,6 @@ class _CartPageState extends State<CartPage> {
                                 setState(() {
                                   shoe.isSelected = value!;
                                 });
-                                cartProvider.notifyListeners();
                               },
                             ),
                             ClipRRect(

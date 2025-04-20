@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: const Color(0xFF1DB954),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 0, 0, 0),
+          scaffoldBackgroundColor:  Colors.white,
         ),
         initialRoute: '/', // Trang bắt đầu
         routes: {
@@ -34,3 +34,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

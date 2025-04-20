@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_buoi5/models/shoe_model.dart';
+import 'package:flutter_buoi5/sections/productsection.dart';
 import 'package:flutter_buoi5/widgets/custom_bottom_nav.dart';
-import 'package:flutter_buoi5/widgets/custom_product_card.dart';
 
 final List<Shoe> data = [
   Shoe(
@@ -46,54 +46,64 @@ final List<Shoe> data = [
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: const Color(0xFF121212), // Dark background
-    appBar: PreferredSize(
-      preferredSize: const Size.fromHeight(80),
-      child: AppBar(
-        backgroundColor: const Color(0xFF1DB954), // Spotify green
-        centerTitle: true,
-        title: const Text(
-          'Home Page',
-          style: TextStyle(color: Colors.white),
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-        ),
-        elevation: 20,
-        shadowColor: const Color(0xFF1DB954),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings, color: Colors.white),
-            onPressed: () {
-              // Navigate to settings
-            },
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white, // Dark background
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(80),
+        child: AppBar(
+          backgroundColor: const Color(0xFF1DB954), // Spotify green
+          centerTitle: true,
+          title: const Text('Home Page', style: TextStyle(color: Colors.white)),
+          shape: const RoundedRectangleBorder(
+           
           ),
-        ],
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: IconButton(
-            icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {
-              // Implement search
-            },
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.settings, color: Colors.white),
+              onPressed: () {
+                // Navigate to settings
+              },
+            ),
+          ],
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: IconButton(
+              icon: const Icon(Icons.search, color: Colors.white),
+              onPressed: () {
+                // Implement search
+              },
+            ),
           ),
         ),
       ),
-    ),
-    body: ListView.builder(
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(12),
-          child: CustomProductCard(shoe: data[index]),
-        );
-      },
-    ),
-    bottomNavigationBar: const CustomBottomNavBar(currentIndex: 0),
-  );
-}
-
+      // body: SizedBox(
+      //   height: 320,
+      //   child: ListView.builder(
+      //     scrollDirection: Axis.horizontal,
+      //     itemCount: data.length,
+      //     itemBuilder: (context, index) {
+      //       return Padding(
+      //         padding: const EdgeInsets.all(8),
+      //         child: AspectRatio(
+      //           aspectRatio: 0.7, // width:height (ví dụ: 2:3 là 200x300)
+      //           child: CustomProductCard(shoe: data[index]),
+      //         ),
+      //       );
+      //     },
+      //   ),
+      // ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ProductSection(title: "Trendy", products: data),
+            ProductSection(title: "Popular",products: data),
+            ProductSection(title: "New Arrivals", products: data),
+          ],
+        ),
+      ),
+      bottomNavigationBar: const CustomBottomNavBar(currentIndex: 0),
+    );
+  }
 }
