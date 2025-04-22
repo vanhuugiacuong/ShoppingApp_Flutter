@@ -57,109 +57,114 @@ class _CartPageState extends State<CartPage> {
     }
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Cart Page"),
-        centerTitle: true,
-        actions: [
-          Consumer<CartProvider>(
-            builder:
-                (context, cartProvider, _) => IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () => _confirmDeleteSelected(cartProvider),
-                ),
+    return CustomBottomNavBar(
+      currentIndex: 1,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: const Text(
+            "Cart Page",
+            style: TextStyle(color: Colors.white),
           ),
-        ],
-      ),
-      body: Consumer<CartProvider>(
-        builder: (context, cartProvider, _) {
-          final cartItems = cartProvider.cartItems;
-          if (cartItems.isEmpty) {
-            return const Center(child: Text('Giỏ hàng đang trống'));
-          }
+          centerTitle: true,
+          actions: [
+            Consumer<CartProvider>(
+              builder: (context, cartProvider, _) => IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () => _confirmDeleteSelected(cartProvider),
+              ),
+            ),
+          ],
+        ),
+        body: Consumer<CartProvider>(
+          builder: (context, cartProvider, _) {
+            final cartItems = cartProvider.cartItems;
+            if (cartItems.isEmpty) {
+              return const Center(child: Text('Giỏ hàng đang trống'));
+            }
 
-          return Column(
-            children: [
-              CheckboxListTile(
-              
-                value: selectAll,
-                onChanged: (_) => _toggleSelectAll(cartProvider),
-                
-                title: const Text("Chọn tất cả"),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: cartItems.length,
-                  itemBuilder: (context, index) {
-                    final shoe = cartItems[index];
-                    // Bên trong ListView.builder
-                    return Card(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.all(10),
-                        leading: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Checkbox(
-                              value: shoe.isSelected,
-                              onChanged: (value) {
-                                setState(() {
-                                  shoe.isSelected = value!;
-                                });
-                              },
-                            ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                shoe.imageUrl,
-                                width: 80,
-                                height: 80,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ],
-                        ),
-                        title: Text(
-                          shoe.name,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Giá: \$${shoe.price.toStringAsFixed(2)}'),
-                            Text('Số lượng: ${shoe.quantity}'),
-                          ],
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.remove),
-                              onPressed:
-                                  () => cartProvider.decrementQuantity(shoe),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.add),
-                              onPressed:
-                                  () => cartProvider.incrementQuantity(shoe),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+            return Column(
+              children: [
+                CheckboxListTile(
+                  value: selectAll,
+                  onChanged: (_) => _toggleSelectAll(cartProvider),
+                  title: const Text("Chọn tất cả"),
                 ),
-              ),
-            ],
-          );
-        },
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: cartItems.length,
+                    itemBuilder: (context, index) {
+                      final shoe = cartItems[index];
+                      return Card(
+                        color: Colors.white,
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(10),
+                          leading: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Checkbox(
+                                value: shoe.isSelected,
+                                activeColor: Colors.black,
+                                onChanged: (value) {
+                                  setState(() {
+                                    shoe.isSelected = value!;
+                                  });
+                                },
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.network(
+                                  shoe.imageUrl,
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ],
+                          ),
+                          title: Text(
+                            shoe.name,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Giá: \$${shoe.price.toStringAsFixed(2)}'),
+                              Text('Số lượng: ${shoe.quantity}'),
+                            ],
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.remove),
+                                onPressed: () =>
+                                    cartProvider.decrementQuantity(shoe),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.add),
+                                onPressed: () =>
+                                    cartProvider.incrementQuantity(shoe),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
-      bottomNavigationBar: const CustomBottomNavBar(currentIndex: 1),
     );
   }
 }

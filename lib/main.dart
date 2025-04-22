@@ -19,8 +19,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: const Color(0xFF1DB954),
+          primaryColor: Colors.black,
           scaffoldBackgroundColor:  Colors.white,
+          
         ),
         initialRoute: '/', // Trang bắt đầu
         routes: {

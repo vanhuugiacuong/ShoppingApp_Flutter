@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
+  final Widget child;
 
-  const CustomBottomNavBar({super.key, required this.currentIndex});
+  const CustomBottomNavBar({
+    super.key,
+    required this.child,
+    required this.currentIndex,
+  });
 
   void _onItemTapped(BuildContext context, int index) {
     if (index == currentIndex) return; // Không chuyển nếu đang ở trang hiện tại
@@ -21,42 +26,114 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 8,
-            offset: Offset(0, 4),
-          )
+     final isDesktop = MediaQuery.of(context).size.width >= 800;
+
+    return Scaffold(
+      body: Row(
+        children: [
+          if (isDesktop)
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 10,
+                    offset: const Offset(2, 0),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: NavigationRail(
+                selectedIndex: currentIndex,
+                onDestinationSelected: (index) => _onItemTapped(context, index),
+                backgroundColor: Colors.transparent,
+                labelType: NavigationRailLabelType.all,
+                selectedIconTheme: IconThemeData(
+                  color: Theme.of(context).primaryColor,
+                ),
+                unselectedIconTheme: const IconThemeData(color: Colors.grey),
+                selectedLabelTextStyle: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+                unselectedLabelTextStyle: const TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12,
+                ),
+                destinations: const [
+                  NavigationRailDestination(
+                    icon: Icon(Icons.home_outlined),
+                    selectedIcon: Icon(Icons.home),
+                    label: Text('Home'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.shopping_cart_outlined),
+                    selectedIcon: Icon(Icons.shopping_cart),
+                    label: Text('Cart'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.person_outlined),
+                    selectedIcon: Icon(Icons.person),
+                    label: Text('Profile'),
+                  ),
+                ],
+              ),
+            ),
+          Expanded(child: child),
         ],
       ),
-      child: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => _onItemTapped(context, index),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.grey,
-        selectedFontSize: 14,
-        unselectedFontSize: 12,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            activeIcon: Icon(Icons.shopping_cart),
-            label: "Cart",
-          ),
-        ],
-      ),
+      bottomNavigationBar: isDesktop
+          ? null
+          : Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 10,
+                    offset: const Offset(0, -2),
+                  ),
+                ],
+              ),
+              child: BottomNavigationBar(
+                currentIndex: currentIndex,
+                onTap: (index) => _onItemTapped(context, index),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                selectedItemColor: Theme.of(context).primaryColor,
+                unselectedItemColor: Colors.grey,
+                selectedFontSize: 14,
+                unselectedFontSize: 12,
+                type: BottomNavigationBarType.fixed,
+                items: const [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home_outlined),
+                    activeIcon: Icon(Icons.home),
+                    label: "Home",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.shopping_cart_outlined),
+                    activeIcon: Icon(Icons.shopping_cart),
+                    label: "Cart",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.person_outlined),
+                    activeIcon: Icon(Icons.person),
+                    label: "Profile",
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }

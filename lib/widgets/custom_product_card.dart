@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_buoi5/models/shoe_model.dart';
+import 'package:flutter_buoi5/pages/detail_page.dart';
 import 'package:flutter_buoi5/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,17 @@ class CustomProductCard extends StatefulWidget {
 class _CustomProductCardState extends State<CustomProductCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return GestureDetector(
+            onTap: () {
+        // Điều hướng tới trang chi tiết
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ShoeDetailPage(shoe: widget.shoe),
+          ),
+        );
+      },
+      child: Card(
       color: Colors.white,
       clipBehavior: Clip.antiAlias,
       shadowColor: const Color.fromARGB(255, 144, 143, 143),
@@ -95,6 +106,7 @@ class _CustomProductCardState extends State<CustomProductCard> {
 
         ],
       ),
+    ),
     );
   }
 }

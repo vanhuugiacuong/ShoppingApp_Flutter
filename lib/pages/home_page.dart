@@ -48,62 +48,17 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white, // Dark background
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: AppBar(
-          backgroundColor: const Color(0xFF1DB954), // Spotify green
-          centerTitle: true,
-          title: const Text('Home Page', style: TextStyle(color: Colors.white)),
-          shape: const RoundedRectangleBorder(
-           
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.settings, color: Colors.white),
-              onPressed: () {
-                // Navigate to settings
-              },
-            ),
-          ],
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: IconButton(
-              icon: const Icon(Icons.search, color: Colors.white),
-              onPressed: () {
-                // Implement search
-              },
-            ),
-          ),
-        ),
-      ),
-      // body: SizedBox(
-      //   height: 320,
-      //   child: ListView.builder(
-      //     scrollDirection: Axis.horizontal,
-      //     itemCount: data.length,
-      //     itemBuilder: (context, index) {
-      //       return Padding(
-      //         padding: const EdgeInsets.all(8),
-      //         child: AspectRatio(
-      //           aspectRatio: 0.7, // width:height (ví dụ: 2:3 là 200x300)
-      //           child: CustomProductCard(shoe: data[index]),
-      //         ),
-      //       );
-      //     },
-      //   ),
-      // ),
-      body: SingleChildScrollView(
+    return CustomBottomNavBar(
+      currentIndex: 0,
+      child: SingleChildScrollView(
         child: Column(
           children: [
             ProductSection(title: "Trendy", products: data),
-            ProductSection(title: "Popular",products: data),
+            ProductSection(title: "Popular", products: data),
             ProductSection(title: "New Arrivals", products: data),
           ],
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavBar(currentIndex: 0),
     );
   }
 }
