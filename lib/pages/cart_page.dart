@@ -73,7 +73,8 @@ class _CartPageState extends State<CartPage> {
           actions: [
             Consumer<CartProvider>(
               builder: (context, cartProvider, _) => IconButton(
-                icon: const Icon(Icons.delete),
+                icon: const Icon(Icons.delete,
+                color: Colors.white,),
                 onPressed: () => _confirmDeleteSelected(cartProvider),
               ),
             ),

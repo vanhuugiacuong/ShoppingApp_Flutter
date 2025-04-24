@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_buoi5/models/shoe_model.dart';
 import 'package:flutter_buoi5/sections/productsection.dart';
 import 'package:flutter_buoi5/widgets/custom_bottom_nav.dart';
+import 'package:flutter_buoi5/widgets/custom_filter_category_section.dart';
+import 'package:flutter_buoi5/widgets/custom_search_bar.dart';
 
 final List<Shoe> data = [
   Shoe(
@@ -48,15 +50,26 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBottomNavBar(
-      currentIndex: 0,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            ProductSection(title: "Trendy", products: data),
-            ProductSection(title: "Popular", products: data),
-            ProductSection(title: "New Arrivals", products: data),
-          ],
+    return Scaffold(
+      appBar: const SearchAppBar(),
+      body: CustomBottomNavBar(
+        currentIndex: 0,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 12),
+
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.0),
+                child: FilterAndCategorySection(),
+              ),
+
+              const SizedBox(height: 16),
+              ProductSection(title: "Trendy", products: data),
+              ProductSection(title: "Popular", products: data),
+              ProductSection(title: "New Arrivals", products: data),
+            ],
+          ),
         ),
       ),
     );
