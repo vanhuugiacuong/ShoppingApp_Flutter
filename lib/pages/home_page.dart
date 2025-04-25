@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_buoi5/models/shoe_model.dart';
-import 'package:flutter_buoi5/sections/productsection.dart';
+import 'package:flutter_buoi5/sections/listviewproductsection.dart';
+import 'package:flutter_buoi5/sections/trendyproductsection.dart';
 import 'package:flutter_buoi5/widgets/custom_bottom_nav.dart';
 import 'package:flutter_buoi5/widgets/custom_filter_category_section.dart';
 import 'package:flutter_buoi5/widgets/custom_search_bar.dart';
@@ -65,9 +66,12 @@ class HomePage extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
-              ProductSection(title: "Trendy", products: data),
-              ProductSection(title: "Popular", products: data),
-              ProductSection(title: "New Arrivals", products: data),
+              ProductSection(title: "Bán Chạy", products: data),
+              // ProductSection(title: "Popular", products: data),
+              Listviewproductsection(
+                title: 'Kham Thảo',
+                products: data, // Truyền danh sách sản phẩm vào widget
+              ),
             ],
           ),
         ),

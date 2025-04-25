@@ -8,34 +8,39 @@ class FilterAndCategorySection extends StatelessWidget {
     final filterButtons = ['Filter', 'Ratings', 'Size', 'Color', 'Price'];
     final categories = [
       {'icon': Icons.backpack, 'label': 'Bags'},
-      {'icon': Icons.account_balance_wallet, 'label': 'Wallets'},
       {'icon': Icons.directions_run, 'label': 'Footwear'},
       {'icon': Icons.checkroom, 'label': 'Clothes'},
-      {'icon': Icons.watch, 'label': 'Watches'},
+      {'icon': Icons.sports_basketball, 'label': 'Sports'},
+      {'icon': Icons.star, 'label': 'Fashion'},
     ];
 
+
     return Column(
-       crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Filter buttons
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: filterButtons.map((text) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: OutlinedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.filter_list, size: 16),
-                  label: Text(text),
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+            children:
+                filterButtons.map((text) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        
+                      },
+                      icon: const Icon(Icons.filter_list, size: 16, color: Colors.black,),
+                      label: Text(text,
+                      style: const TextStyle(color: Colors.black),),
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              );
-            }).toList(),
+                  );
+                }).toList(),
           ),
         ),
         const SizedBox(height: 12),
@@ -54,11 +59,14 @@ class FilterAndCategorySection extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 30,
+                      
                       backgroundColor: Colors.grey.shade200,
-                      child: Icon(item['icon'] as IconData, size: 28),
+                      child: Icon(item['icon'] as IconData, size: 28,color: Colors.black,),
                     ),
                     const SizedBox(height: 6),
-                    Text(item['label'] as String),
+                    Text(item['label'] as String
+                    ,
+                    ),
                   ],
                 ),
               );
@@ -67,5 +75,5 @@ class FilterAndCategorySection extends StatelessWidget {
         ),
       ],
     );
-  }     
+  }
 }

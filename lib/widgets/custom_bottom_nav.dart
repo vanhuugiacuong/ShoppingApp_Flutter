@@ -118,17 +118,17 @@ class CustomBottomNavBar extends StatelessWidget {
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home_outlined),
                       activeIcon: Icon(Icons.home),
-                      label: "Home",
+                      label: "Trang Chủ",
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.shopping_cart_outlined),
                       activeIcon: Icon(Icons.shopping_cart),
-                      label: "Cart",
+                      label: "Giỏ Hàng",
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.person_outlined),
                       activeIcon: Icon(Icons.person),
-                      label: "Profile",
+                      label: "Thông Tin",
                     ),
                   ],
                 ),
